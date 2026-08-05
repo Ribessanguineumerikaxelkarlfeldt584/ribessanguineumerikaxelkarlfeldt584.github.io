@@ -4,13 +4,13 @@
  * A friendly component that gently reminds someone to take a break.
  *
  * Attributes:
- *   name="Danny"      – Personalises the greeting: "Danny, you've earned a break."
+ *   name="Lionel"      – Personalises the greeting: "Lionel, you've earned a break."
  *   theme="light|dark" – Forces light or dark theme (auto-detects by default).
  *   size="2"           – Scale factor relative to the default card size (e.g. 2 = twice as big).
  *
  * Usage:
  *   <script src="need-a-break.js"></script>
- *   <need-a-break name="Danny"></need-a-break>
+ *   <need-a-break name="Lionel"></need-a-break>
  */
 
 class NeedABreak extends HTMLElement {
@@ -235,8 +235,7 @@ class NeedABreak extends HTMLElement {
   // Personalise the displayed message with the name attribute.
   // -------------------------------------------------------------------
   _updateName() {
-    const name = this.getAttribute("name");
-    if (!name) return;
+    const name = this.getAttribute("name") || "Lionel";
     // Only prepend the name if it isn't already there.
     const base = this._messages[this._msgIndex];
     this._msgEl.textContent = `${name}, ${base.charAt(0).toLowerCase()}${base.slice(1)}`;
