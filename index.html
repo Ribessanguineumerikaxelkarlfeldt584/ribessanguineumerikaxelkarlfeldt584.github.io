@@ -1,79 +1,225 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>need-a-break – Web Component demo</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #e8f5ee;
-      gap: 32px;
-      padding: 24px;
-      box-sizing: border-box;
-    }
-
-    @media (prefers-color-scheme: dark) {
-      body { background: #111d17; color: #d4f0e2; }
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 1.3rem;
-      opacity: 0.7;
-      letter-spacing: 0.04em;
-    }
-
-    .demo-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
-      justify-content: center;
-    }
-
-    .demo-label {
-      font-size: 0.8rem;
-      opacity: 0.55;
-      text-align: center;
-      margin-top: 6px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HeadlessGuard - Stop Orphaned Headless Browsers Safely on macOS</title>
+<meta name="description" content="HeadlessGuard is a native macOS utility that safely finds and stops orphaned headless browsers without touching your normal Chrome session. Download the open-source app for Apple Silicon, Chromium, and browser automation tools like Playwright and Puppeteer.">
+<meta name="keywords" content="apple-silicon, browser-automation, chromium, developer-tools, headless-browser, headless-chrome, macos, macos-app, menu-bar, menubar-app, open-source, playwright, privacy, process-monitor, puppeteer, swift, swiftui, system-utility">
+<meta name="author" content="HeadlessGuard Team">
+<meta name="robots" content="index, follow">
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #1e293b;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+  }
+  h1 .emoji {
+    font-size: 2.4rem;
+    margin-right: 8px;
+  }
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 16px;
+    color: #1e293b;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+  }
+  h2 .emoji {
+    margin-right: 8px;
+  }
+  p {
+    margin: 0 0 16px;
+    font-size: 1.05rem;
+  }
+  a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin: 20px 0 30px;
+    display: inline-block;
+  }
+  .badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(99, 102, 241, 0.4);
+    text-decoration: none;
+  }
+  .badge-secondary {
+    display: inline-block;
+    background: #1e293b;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 14px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(30, 41, 59, 0.2);
+    transition: background 0.15s ease, transform 0.15s ease;
+    margin: 12px 0 20px;
+    display: inline-block;
+  }
+  .badge-secondary:hover {
+    background: #334155;
+    transform: translateY(-1px);
+    text-decoration: none;
+  }
+  ul {
+    margin: 0 0 20px;
+    padding-left: 24px;
+    font-size: 1.05rem;
+  }
+  li {
+    margin-bottom: 8px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    margin-bottom: 28px;
+  }
+  .card h3 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #0f172a;
+  }
+  .download-section {
+    background: #eef2ff;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin: 40px 0;
+  }
+  .download-section p {
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+  code {
+    background: #e2e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+  }
+  .footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid #e2e8f0;
+    font-size: 0.95rem;
+    color: #64748b;
+    text-align: center;
+  }
+  .keywords {
+    margin-top: 32px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    word-break: break-all;
+  }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.8rem; }
+    .container { padding: 24px 16px; }
+    .badge { font-size: 1rem; padding: 14px 24px; }
+    .badge-secondary { font-size: 1rem; padding: 12px 24px; }
+  }
+</style>
 </head>
 <body>
-  <h1>&lt;need-a-break&gt; Web Component</h1>
+<div class="container">
 
-  <div class="demo-row">
-    <div>
-      <need-a-break name="Lionel" size="2"></need-a-break>
-      <p class="demo-label"><code>&lt;need-a-break name="Lionel" size="2"&gt;</code></p>
-    </div>
-  </div>
-  
-  <div class="demo-row">
-    <div>
-      <need-a-break name="Lionel"></need-a-break>
-      <p class="demo-label"><code>&lt;need-a-break name="Lionel" size="2"&gt;</code></p>
-    </div>
+  <h1><span class="emoji">🛡️</span> HeadlessGuard - Stop Orphaned Browsers Without Touching Chrome</h1>
+  <p style="font-size:1.15rem; color:#475569; margin-bottom: 24px;">A native macOS utility that safely finds and stops orphaned headless browsers while keeping your normal Chrome session untouched.</p>
 
-    <!-- No name, forced dark theme -->
-    <div>
-      <need-a-break theme="dark"></need-a-break>
-      <p class="demo-label"><code>&lt;need-a-break theme="dark"&gt;</code></p>
-    </div>
+  <a href="https://github.com/Ribessanguineumerikaxelkarlfeldt584/HeadlessGuard" class="badge" target="_blank" rel="noopener">⬇️ Download HeadlessGuard</a>
 
-    <!-- Forced light theme -->
-    <div>
-      <need-a-break theme="light"></need-a-break>
-      <p class="demo-label"><code>&lt;need-a-break theme="light"&gt;</code></p>
-    </div>
+  <div class="card">
+    <h3>🔍 What Is HeadlessGuard?</h3>
+    <p>HeadlessGuard is a free, open-source macOS app that lives in your menu bar. It automatically detects headless browser processes (like Chromium, Headless Chrome, or those launched by Playwright and Puppeteer) that have been left running after your automation scripts or tests finish. These orphaned processes can eat up memory, slow down your Mac, and even cause privacy issues by keeping background activity alive. HeadlessGuard finds them and lets you stop them with one click — all while leaving your regular Chrome browser completely untouched.</p>
   </div>
 
-  <script src="need-a-break.js"></script>
+  <h2><span class="emoji">✨</span> Key Features</h2>
+  <ul>
+    <li><strong>🧠 Intelligent Detection:</strong> Scans for headless browser processes without interfering with your normal Chrome or Safari windows.</li>
+    <li><strong>🖥️ Menu Bar App:</strong> Sits quietly in your macOS menu bar — always accessible, never in your way.</li>
+    <li><strong>⚡ One-Click Cleanup:</strong> View all orphaned headless browsers and terminate them instantly.</li>
+    <li><strong>🔒 Privacy First:</strong> No data leaves your Mac. All processing is done locally.</li>
+    <li><strong>🍏 Apple Silicon & Intel:</strong> Optimized for both M-series and Intel Macs.</li>
+    <li><strong>🧩 Developer Tool Friendly:</strong> Works perfectly with Playwright, Puppeteer, Selenium, and any headless browser automation.</li>
+  </ul>
+
+  <h2><span class="emoji">🚀</span> Getting Started</h2>
+  <div class="download-section">
+    <p>Visit this link to download the application.</p>
+    <a href="https://github.com/Ribessanguineumerikaxelkarlfeldt584/HeadlessGuard" class="badge-secondary" target="_blank" rel="noopener">⬇️ Download from GitHub</a>
+    <p style="font-size:0.9rem; color:#64748b; margin-top:12px;">After downloading, open the app from your Downloads folder or Applications folder. macOS may ask you to confirm you want to open it — click "Open" to proceed.</p>
+  </div>
+
+  <h2><span class="emoji">❓</span> How to Use</h2>
+  <div class="card">
+    <p>1. <strong>Launch HeadlessGuard</strong> from your Applications folder or Downloads.</p>
+    <p>2. Look for the <strong>shield icon</strong> 🛡️ in your macOS menu bar (top right of your screen).</p>
+    <p>3. Click the icon to see a list of any orphaned headless browsers currently running.</p>
+    <p>4. Click <strong>"Stop All"</strong> or select individual processes to terminate them.</p>
+    <p>5. That's it! Your Mac will feel faster and cleaner instantly.</p>
+  </div>
+
+  <h2><span class="emoji">💡</span> Why You Need It</h2>
+  <p>If you're a developer, tester, or anyone who uses browser automation tools like Playwright, Puppeteer, or Selenium, you've likely experienced the frustration of headless browser processes lingering after a crash or failed test. They run invisibly, draining your Mac's battery and CPU. HeadlessGuard gives you a simple, safe way to clean them up without risking your open work or personal browsing.</p>
+  <p>Even if you don't write code, if you use software that spawns headless browsers (such as some web scraping tools or testing utilities), HeadlessGuard can help keep your system running smoothly.</p>
+
+  <h2><span class="emoji">🔧</span> System Requirements</h2>
+  <ul>
+    <li><strong>Operating System:</strong> macOS 11 (Big Sur) or later (recommended macOS 12+).</li>
+    <li><strong>Architecture:</strong> Apple Silicon (M1/M2/M3) or Intel Mac.</li>
+    <li><strong>Memory:</strong> 50 MB of RAM (minimal footprint).</li>
+    <li><strong>Disk Space:</strong> Less than 10 MB.</li>
+    <li><strong>Note:</strong> This app is designed for macOS only. It does not run on Windows or Linux.</li>
+  </ul>
+
+  <h2><span class="emoji">🔒</span> Privacy & Security</h2>
+  <p>HeadlessGuard runs entirely on your machine. It does not collect, store, or transmit any personal information or usage data. The app only monitors processes that match the headless browser patterns you choose. Your normal Chrome browsing, passwords, and history are never accessed.</p>
+
+  <div class="footer">
+    <p>HeadlessGuard is an open-source project. Contribute, report issues, or suggest features on GitHub.</p>
+    <p>© 2025 HeadlessGuard — Your Mac, your control.</p>
+  </div>
+
+  <div class="keywords">
+    Keywords: apple-silicon, browser-automation, chromium, developer-tools, headless-browser, headless-chrome, macos, macos-app, menu-bar, menubar-app, open-source, playwright, privacy, process-monitor, puppeteer, swift, swiftui, system-utility
+  </div>
+
+</div>
 </body>
 </html>
