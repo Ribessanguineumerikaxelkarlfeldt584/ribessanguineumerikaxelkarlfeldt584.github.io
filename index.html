@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>need-a-break – Web Component demo</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #e8f5ee;
+      gap: 32px;
+      padding: 24px;
+      box-sizing: border-box;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body { background: #111d17; color: #d4f0e2; }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.3rem;
+      opacity: 0.7;
+      letter-spacing: 0.04em;
+    }
+
+    .demo-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .demo-label {
+      font-size: 0.8rem;
+      opacity: 0.55;
+      text-align: center;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <h1>&lt;need-a-break&gt; Web Component</h1>
+
+  <div class="demo-row">
+    <!-- Personalised usage (from the problem statement) -->
+    <div>
+      <need-a-break name="Danny"></need-a-break>
+      <p class="demo-label"><code>&lt;need-a-break name="Danny"&gt;</code></p>
+    </div>
+
+    <!-- No name, forced dark theme -->
+    <div>
+      <need-a-break theme="dark"></need-a-break>
+      <p class="demo-label"><code>&lt;need-a-break theme="dark"&gt;</code></p>
+    </div>
+
+    <!-- Forced light theme -->
+    <div>
+      <need-a-break theme="light"></need-a-break>
+      <p class="demo-label"><code>&lt;need-a-break theme="light"&gt;</code></p>
+    </div>
+  </div>
+
+  <script src="need-a-break.js"></script>
+</body>
+</html>
