@@ -6,6 +6,7 @@
  * Attributes:
  *   name="Danny"      – Personalises the greeting: "Danny, you've earned a break."
  *   theme="light|dark" – Forces light or dark theme (auto-detects by default).
+ *   size="2"           – Scale factor relative to the default card size (e.g. 2 = twice as big).
  *
  * Usage:
  *   <script src="need-a-break.js"></script>
@@ -18,7 +19,7 @@ class NeedABreak extends HTMLElement {
   // whenever one of these changes on the element.
   // -------------------------------------------------------------------
   static get observedAttributes() {
-    return ["name", "theme"];
+    return ["name", "theme", "size"];
   }
 
   constructor() {
@@ -66,6 +67,7 @@ class NeedABreak extends HTMLElement {
   connectedCallback() {
     this._applyTheme();
     this._updateName();
+    this._applySize();
     this._startDrain();
   }
 
@@ -82,6 +84,7 @@ class NeedABreak extends HTMLElement {
   attributeChangedCallback(name) {
     if (name === "theme") this._applyTheme();
     if (name === "name") this._updateName();
+    if (name === "size") this._applySize();
   }
 
   // -------------------------------------------------------------------
@@ -316,6 +319,21 @@ class NeedABreak extends HTMLElement {
   }
 
   // -------------------------------------------------------------------
+  // Apply a scale factor from the size attribute (e.g. size="2" → 2×).
+  // -------------------------------------------------------------------
+  _applySize() {
+    const scale = parseFloat(this.getAttribute("size"));
+    if (scale > 0 && scale !== 1) {
+      const px = Math.round(320 * scale);
+      this._cardEl.style.width = `${px}px`;
+      this._cardEl.style.fontSize = `${scale}rem`;
+    } else {
+      this._cardEl.style.width = "";
+      this._cardEl.style.fontSize = "";
+    }
+  }
+
+  // -------------------------------------------------------------------
   // All component styles in one place.
   // -------------------------------------------------------------------
   _css() {
@@ -359,7 +377,7 @@ class NeedABreak extends HTMLElement {
 
       /* ---- Floating icon animation ---- */
       .icon {
-        font-size: 2.6rem;
+        font-size: 2.6em;
         animation: float 3.6s ease-in-out infinite;
         line-height: 1;
         user-select: none;
@@ -373,7 +391,7 @@ class NeedABreak extends HTMLElement {
       /* ---- Message ---- */
       .message {
         margin: 0;
-        font-size: 1rem;
+        font-size: 1em;
         line-height: 1.5;
         text-align: center;
         min-height: 3em;
@@ -393,7 +411,7 @@ class NeedABreak extends HTMLElement {
       /* ---- Warning banner ---- */
       .warning {
         margin: 0;
-        font-size: 0.88rem;
+        font-size: 0.88em;
         font-weight: 600;
         color: #b85c00;
         text-align: center;
@@ -410,7 +428,7 @@ class NeedABreak extends HTMLElement {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        font-size: 0.78rem;
+        font-size: 0.78em;
         opacity: 0.75;
         margin-bottom: -4px;
       }
@@ -447,7 +465,7 @@ class NeedABreak extends HTMLElement {
         border: none;
         border-radius: 999px;
         padding: 7px 16px;
-        font-size: 0.85rem;
+        font-size: 0.85em;
         cursor: pointer;
         font-family: inherit;
         transition: transform 0.15s, box-shadow 0.15s;
